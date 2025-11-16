@@ -23,6 +23,7 @@ var (
 	allPtr          = flag.Bool("all", false, "")
 	passPtr         = flag.Bool("pass", false, "")
 	skipPtr         = flag.Bool("skip", false, "")
+	failOnlyPtr     = flag.Bool("fail-only", false, "")
 	showNoTestsPtr  = flag.Bool("notests", false, "")
 	smallScreenPtr  = flag.Bool("smallscreen", false, "")
 	noColorPtr      = flag.Bool("nocolor", false, "")
@@ -53,6 +54,7 @@ Options:
     -all           Display table event for pass and skip. (Failed items always displayed)
     -pass          Display table for passed tests.
     -skip          Display table for skipped tests.
+    -fail-only     Display table for failed tests only.
     -notests       Display packages containing no test files or empty test files.
     -smallscreen   Split subtest names vertically to fit on smaller screens.
     -slow          Number of slowest tests to display. Default is 0, display all.
@@ -158,10 +160,12 @@ func main() {
 			Trim:     *smallScreenPtr,
 			TrimPath: *trimPathPtr,
 			Slow:     *slowPtr,
+			FailOnly: *failOnlyPtr,
 		},
 		SummaryTableOptions: app.SummaryTableOptions{
 			Trim:     *smallScreenPtr,
 			TrimPath: *trimPathPtr,
+			FailOnly: *failOnlyPtr,
 		},
 		Format:         format,
 		Sorter:         sorter,

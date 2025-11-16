@@ -25,6 +25,8 @@ type SummaryTableOptions struct {
 
 	// TrimPath is the path prefix to trim from the package name.
 	TrimPath string
+
+	FailOnly bool
 }
 
 func (c *consoleWriter) summaryTable(
@@ -199,6 +201,9 @@ func (c *consoleWriter) summaryTable(
 		return
 	}
 	for _, r := range passed {
+		if options.FailOnly && r.fail == "0" {
+			continue
+		}
 		data.Append(r.toRow())
 	}
 
@@ -212,6 +217,10 @@ func (c *consoleWriter) summaryTable(
 		}
 	}
 
+	if options.FailOnly && data.Rows() == 0 {
+		fmt.Fprintln(c.w, "No tests failed.")
+		return
+	}
 	fmt.Fprintln(c.w, tbl.Data(data).Render())
 }
 
