@@ -26,6 +26,7 @@ type SummaryTableOptions struct {
 	// TrimPath is the path prefix to trim from the package name.
 	TrimPath string
 
+	// FailOnly will display only packages with failed tests.
 	FailOnly bool
 }
 

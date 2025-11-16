@@ -20,7 +20,10 @@ var (
 
 type TestTableOptions struct {
 	// Display passed or skipped tests. If both are true this is equivalent to all.
-	Pass, Skip, FailOnly bool
+	Pass, Skip bool
+	// FailOnly will display only tests with failed status.
+	// If true, this takes precedence over Pass and Skip.
+	FailOnly bool
 	// For narrow screens, trim long test identifiers vertically. Example:
 	// TestNoVersioning/seed-up-down-to-zero
 	//
