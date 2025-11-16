@@ -120,7 +120,11 @@ func main() {
 		return
 	}
 
-	if *allPtr {
+	if *failOnlyPtr && (*passPtr || *skipPtr || *allPtr) {
+		fmt.Fprintln(os.Stderr, "warning: -fail-only takes precedence over -pass, -skip, and -all flags")
+		*passPtr = false
+		*skipPtr = false
+	} else if *allPtr {
 		*passPtr = true
 		*skipPtr = true
 	}
@@ -157,10 +161,10 @@ func main() {
 		TestTableOptions: app.TestTableOptions{
 			Pass:     *passPtr,
 			Skip:     *skipPtr,
+			FailOnly: *failOnlyPtr,
 			Trim:     *smallScreenPtr,
 			TrimPath: *trimPathPtr,
 			Slow:     *slowPtr,
-			FailOnly: *failOnlyPtr,
 		},
 		SummaryTableOptions: app.SummaryTableOptions{
 			Trim:     *smallScreenPtr,
